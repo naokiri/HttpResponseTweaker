@@ -1,0 +1,9 @@
+// ts config used only for webpack so that module is commonjs style that ts-node can understand.
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true
+    }
+}

@@ -1,0 +1,33 @@
+{
+  "description": "HttpResponseIjiry",
+  "scripts": {
+    "build": "TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack --mode development",
+    "build-production": "TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack --mode production",
+    "lint-fix": "eslint --fix"
+  },
+  "devDependencies": {
+    "@types/firefox-webext-browser": "^70.0.1",
+    "@types/webpack": "^4.41.8",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "eslint": "^6.8.0",
+    "eslint-config-standard-with-typescript": "^15.0.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "ts-loader": "^6.2.2",
+    "ts-node": "^8.8.1",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^3.8.3",
+    "webextension-polyfill": "^0.6.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3",
+    "workbox-webpack-plugin": "^5.1.2"
+  },
+  "dependencies": {
+    "@types/copy-webpack-plugin": "^5.0.0"
+  }
+}

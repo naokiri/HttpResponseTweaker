@@ -1,0 +1,26 @@
+{
+
+  "description": "Http Response Ijiri ('Fumble and Mess' in Japanese)",
+  "manifest_version": 2,
+  "name": "http-response-ijiri",
+  "version": "0.2",
+  "homepage_url": "https://example.com",
+
+  "permissions": [
+    "webRequest", "webRequestBlocking", "https://*/"
+  ],
+
+  "background": {
+    "scripts": ["dist/browser-polyfill.js","dist/background.js"]
+  },
+
+  // For during development? 
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+
+  "browser_specific_settings": {
+    "gecko": {
+      "strict_min_version": "57.0a1"
+    }
+  }
+
+}
