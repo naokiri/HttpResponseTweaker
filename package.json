@@ -1,7 +1,7 @@
 {
   "description": "HttpResponseIjiry",
   "scripts": {
-    "build": "TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack --mode development",
+    "build": "TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack --mode development --watch",
     "build-production": "TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack --mode production",
     "lint-fix": "eslint --fix"
   },
