@@ -1,0 +1,37 @@
+{
+
+  "description": "Fumble and mess the Http Response",
+  "manifest_version": 2,
+  "name": "Http Response Ijiri",
+  "version": "0.2",
+  "homepage_url": "https://example.com",
+
+  "permissions": [
+    "storage",
+    "webRequest", 
+    "webRequestBlocking",
+    "https://*/"
+  ],
+
+  "background": {
+    "scripts": ["browser-polyfill.js","background.js"]
+  },
+
+  "devtools_page": "devtools/devtools_page.html",
+
+  // For during development? 
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+
+  "applications": {
+    "gecko": {
+      "id": "tmpID@example.com"
+    }
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "strict_min_version": "57.0a1"
+    }
+  }
+
+}

@@ -13,13 +13,20 @@ const config: ConfigurationFactory = () => {
   const devToolOption = getDevToolOption(process.env.NODE_ENV)
   return {
     ...devToolOption,
-    entry: './src/index.ts',
+    entry: {
+      background: './src/index.ts',
+      devtools: './src/devtools/devtools.ts'
+    },
     output: {
-      filename: 'background.js'
+      filename: (chunkData) => {
+        return chunkData.chunk.name === 'background' ? '[name].js' : '[name]/[name].js'
+      }
     },
     plugins: [
       new CopyWebpackPlugin([
-        { from: 'node_modules/webextension-polyfill/dist/browser-polyfill.js', to: '.' }
+        { from: 'node_modules/webextension-polyfill/dist/browser-polyfill.js', to: '.' },
+        { from: '**/*.html', to: '[path]/[name].[ext]', context: 'src'  },
+        { from: 'src/manifest.json' }
       ])
     ],
     module: {
