@@ -1,5 +1,6 @@
 console.log('Hello World from your main file!')
 
+
 const listener = (details: { requestId: string }): object => {
   const filter: StreamFilter = browser.webRequest.filterResponseData(details.requestId) as StreamFilter
 
@@ -18,8 +19,12 @@ const listener = (details: { requestId: string }): object => {
   return {}
 }
 
-browser.webRequest.onBeforeRequest.addListener(
-  listener,
-  { urls: ['https://example.com/*'], types: ['main_frame'] },
-  ['blocking']
-)
+browser.runtime.onConnect.addListener((p:browser.runtime.Port) => {
+  p.onMessage.addListener(() => {
+      browser.webRequest.onBeforeRequest.addListener(
+        listener,
+        { urls: ['https://example.com/*'], types: ['main_frame']},
+        ['blocking']
+      )
+  });
+})

@@ -1,7 +1,10 @@
-import { ConfigurationFactory } from 'webpack'
+import { ConfigurationFactory, Entry } from 'webpack'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
+import VueLoader from 'vue-loader'
+import glob from 'glob'
+import path from 'path'
 
-function getDevToolOption (env: string): object {
+function getDevToolOption (env?: string): object {
   if (env !== 'production') {
     return { devtool: 'inline-source-map' }
   } else {
@@ -9,35 +12,66 @@ function getDevToolOption (env: string): object {
   }
 }
 
+function getEntryPointFile (dirname: string): string | undefined {
+  const vuefile = glob.sync(`${dirname}${path.sep}*.vue`)
+  if (vuefile.length > 0) {
+    return vuefile[0]
+  }
+  const tsfile = glob.sync(`${dirname}${path.sep}*.ts`)
+  if (tsfile.length > 0) {
+    return tsfile[0]
+  }
+  return undefined
+}
+
+function getEntries (): Entry {
+  const entries = {}
+  glob.sync('src/**/').forEach(
+    dirname => {
+      console.log(dirname)
+      const entryPointFile = getEntryPointFile(dirname)
+      if (entryPointFile) {
+        const filePath = path.parse(entryPointFile)
+        const entryKey = `${filePath.dir.slice(4)}${path.sep}${filePath.name}`
+        entries[entryKey] = `./${filePath.dir}${path.sep}${filePath.name}${filePath.ext}`
+      }
+    }
+  )
+  console.log(entries)
+  return entries
+}
+
 const config: ConfigurationFactory = () => {
   const devToolOption = getDevToolOption(process.env.NODE_ENV)
+  const entries = getEntries()
   return {
     ...devToolOption,
-    entry: {
-      background: './src/index.ts',
-      devtools: './src/devtools/devtools.ts'
-    },
-    output: {
-      filename: (chunkData) => {
-        return chunkData.chunk.name === 'background' ? '[name].js' : '[name]/[name].js'
-      }
-    },
+    context: __dirname,
+    entry: entries,
     plugins: [
       new CopyWebpackPlugin([
         { from: 'node_modules/webextension-polyfill/dist/browser-polyfill.js', to: '.' },
-        { from: '**/*.html', to: '[path]/[name].[ext]', context: 'src'  },
+        { from: '**/*.html', to: '[path]/[name].[ext]', context: 'src' },
         { from: 'src/manifest.json' }
-      ])
+      ]),
+      new VueLoader.VueLoaderPlugin()
     ],
     module: {
       rules: [{
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      {
         test: /\.ts$/,
-        use: 'ts-loader'
+        loader: 'ts-loader',
+        options: { appendTsSuffixTo: [/\.vue$/] }
       }]
     },
     resolve: {
-      // Just in case to import js module
-      extensions: ['.ts', 'js']
+      extensions: ['.vue', '.ts', 'js'],
+      alias: {
+        vue$: 'vue/dist/vue.esm.js'
+      }
     }
   }
 }
