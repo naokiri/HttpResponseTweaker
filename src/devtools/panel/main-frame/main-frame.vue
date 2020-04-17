@@ -8,7 +8,7 @@
         <th></th>
         <th>Enabled</th>
       </tr>
-      <tr v-for="(conf, id_name) in filterConf" :key="id_name" class="configuration_row">
+      <tr v-for="[id_name, conf] in Array.from(filterConf)" :key="id_name" class="configuration_row">
         <td>
           <textarea
             v-model="conf.urlPattern"

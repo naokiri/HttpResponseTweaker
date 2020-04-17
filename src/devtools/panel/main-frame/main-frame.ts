@@ -1,11 +1,11 @@
-import { defineComponent, reactive, SetupContext } from '@vue/composition-api'
+import { defineComponent, reactive, SetupContext, PropType } from '@vue/composition-api'
 import { IHttpResponseTweakConfig } from '../root'
 import Vue from 'vue'
 
 export default defineComponent({
   props: {
     filterConf: {
-      type: Object as () => IHttpResponseTweakConfig
+      type: Map as PropType<IHttpResponseTweakConfig>
     }
   },
   setup(props, context: SetupContext) {
@@ -46,11 +46,12 @@ export default defineComponent({
     }
 
     const handleDeleteFilter = (id: string): void => {
-
+      state.editingId = null
+      context.emit('deleteConfiguration', props.filterConf, id)
     }
 
     const handleAddFilter = (): void => {
-
+      context.emit('addNewConfiguration', props.filterConf)
     }
 
     return {
