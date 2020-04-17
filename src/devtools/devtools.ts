@@ -1,5 +1,5 @@
 browser.devtools.panels.create(
-  'HttpResponseIjiry',
+  'HttpResponseTweaker',
   'icons/icon.png',
   'panel/root.html'
 )

@@ -2,7 +2,7 @@
 
   "description": "Fumble and mess the Http Response",
   "manifest_version": 2,
-  "name": "Http Response Ijiri",
+  "name": "Http Response Tweaker",
   "version": "0.2",
   "homepage_url": "https://example.com",
 
@@ -20,7 +20,7 @@
   "devtools_page": "devtools/devtools.html",
 
   // For during development? 
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  // "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 
   "browser_specific_settings": {
     "gecko": {

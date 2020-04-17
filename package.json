@@ -1,5 +1,5 @@
 {
-  "description": "HttpResponseIjiry",
+  "description": "HttpResponseTweaker",
   "scripts": {
     "build": "TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack --mode development --watch",
     "clean-build": "rm -rI ./dist && TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack --mode development --watch",
