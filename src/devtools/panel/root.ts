@@ -1,43 +1,83 @@
 import Vue from 'vue'
-import FilterField from './filter-field/filter-field.vue'
+import VueCompositionApi from '@vue/composition-api'
+import MainFrame from './main-frame/main-frame.vue'
+import { IFilterConfig, FilterMessage, RefreshMessage } from '../../background'
+Vue.use(VueCompositionApi)
 
-interface FilterConfig {
-  type: string // string for now.
-  domain: string
+export interface IHttpResponseTweakConfig {
+  [id: string]: IFilterConfig
 }
 
-interface HttpResponseTweakConfig {
-  filters?: FilterConfig[]
-};
+const defaultData: IHttpResponseTweakConfig = {
+  hogehoge: {
+    type: 'foo',
+    urlPattern: 'https?://example.com',
+    matchRegExp: 'Example',
+    replaceString: 'MyOwnExample'
+  },
+  fugafuga: {
+    type: 'foo',
+    urlPattern: 'baz',
+    matchRegExp: '',
+    replaceString: ''
+  }
+}
 
 const getStoredData = browser.storage.sync.get({
   http_response_tweek_v1: {
-    // filters: [{
-    //   type: 'foo',
-    //   domain: 'bar'
-    // }, {
-    //   type: 'foo',
-    //   domain: 'baz'
-    // }]
-    filters: []
+    filterConf: defaultData
   }
 })
 
-const initialConfiguraiton: HttpResponseTweakConfig = { filters: [{ type: '', domain: '' }] }
+const initialConfiguraiton: {filterConf: IHttpResponseTweakConfig} = { filterConf: {} }
+
+const saveConfigurations = (configuration: IHttpResponseTweakConfig): void => {
+  console.log(JSON.stringify(configuration))
+  browser.storage.sync.set({
+    http_response_tweek_v1: {
+      filterConf: configuration
+    }
+  })
+  const refreshMessage: RefreshMessage = { messageType: 'refresh' }
+  backgroundPort.postMessage(refreshMessage)
+}
+
+const backgroundPort = browser.runtime.connect()
+
+const setFilterEnabled = ({ filterId, enabled }: {filterId: string, enabled: boolean}): void => {
+  console.log('setFilterEnabled')
+  console.log(filterId)
+  console.log(enabled)
+  const filterMessage: FilterMessage = {
+    messageType: 'filter',
+    enabled: enabled,
+    filter: vm.filterConf[filterId],
+    tabId: browser.devtools.inspectedWindow.tabId,
+    filterId: filterId
+  }
+  backgroundPort.postMessage(filterMessage)
+}
+
 const vm = new Vue({
-  el: '#main_frame',
+  el: '#vue_root',
   data: initialConfiguraiton,
-  template: '<div><filter-field v-for="filter in filters" :key="filter.domain"></filter-field><div>+ button</div></div>',
+  template: '<main-frame :filterConf="filterConf" @saveConfigurations="saveConfigurations" @setFilterEnabled="setFilterEnabled"></main-frame>',
+  methods: {
+    saveConfigurations,
+    setFilterEnabled
+  },
   components: {
-    FilterField
+    MainFrame
   }
 })
 
 getStoredData.then((data) => {
-  console.log(JSON.stringify(data))
-  vm.filters = data.http_response_tweek_v1.filters as FilterConfig[]
-  console.log('vm:' + JSON.stringify(vm.filters))
-  console.log('cc:' + JSON.stringify(initialConfiguraiton.filters))
+  // browser.storage.sync.set({
+  //   http_response_tweek_v1: {
+  //     filterConf: defaultData
+  //   }
+  // })
+  vm.filterConf = data.http_response_tweek_v1.filterConf
 })
 
 getStoredData.catch((e) => {
@@ -45,5 +85,4 @@ getStoredData.catch((e) => {
   console.log(`Storage error: ${e}`)
 })
 
-console.log('root loaded')
 export default vm

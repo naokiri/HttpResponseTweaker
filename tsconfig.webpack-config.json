@@ -1,4 +1,4 @@
-// ts config used only for webpack so that module is commonjs style that ts-node can understand.
+// ts config used only for webpack so that module is commonjs style which ts-node can understand.
 {
     "compilerOptions": {
         "module": "commonjs",

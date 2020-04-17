@@ -2,6 +2,7 @@
   "description": "HttpResponseIjiry",
   "scripts": {
     "build": "TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack --mode development --watch",
+    "clean-build": "rm -rI ./dist && TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack --mode development --watch",
     "build-production": "TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack --mode production",
     "lint-fix": "eslint webpack.config.ts src/**/*.ts --fix"
   },
@@ -11,6 +12,7 @@
     "@types/webpack": "^4.41.8",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
+    "@vue/composition-api": "^0.5.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.2",
     "eslint": "^6.8.0",
@@ -32,5 +34,7 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "uuid": "^7.0.3"
+  }
 }

@@ -4,7 +4,7 @@ import VueLoader from 'vue-loader'
 import glob from 'glob'
 import path from 'path'
 
-function getDevToolOption (env?: string): object {
+function getDevToolOption(env?: string): object {
   if (env !== 'production') {
     return { devtool: 'inline-source-map' }
   } else {
@@ -12,7 +12,7 @@ function getDevToolOption (env?: string): object {
   }
 }
 
-function getEntryPointFile (dirname: string): string | undefined {
+function getEntryPointFile(dirname: string): string | undefined {
   const vuefile = glob.sync(`${dirname}${path.sep}*.vue`)
   if (vuefile.length > 0) {
     return vuefile[0]
@@ -24,7 +24,7 @@ function getEntryPointFile (dirname: string): string | undefined {
   return undefined
 }
 
-function getEntries (): Entry {
+function getEntries(): Entry {
   const entries = {}
   glob.sync('src/**/').forEach(
     dirname => {
@@ -65,6 +65,12 @@ const config: ConfigurationFactory = () => {
         test: /\.ts$/,
         loader: 'ts-loader',
         options: { appendTsSuffixTo: [/\.vue$/] }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'css-loader'
+        ]
       }]
     },
     resolve: {
