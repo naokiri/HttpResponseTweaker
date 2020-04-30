@@ -1,0 +1,8 @@
+{
+  "material-design-icons": {
+    "licenses": "Apache License 2.0",
+    "repository": "http://github.com/google/material-design-icons/",
+    "publisher": "Google",
+    "licenseFile": "https://github.com/google/material-design-icons/blob/master/LICENSE"
+  }
+}

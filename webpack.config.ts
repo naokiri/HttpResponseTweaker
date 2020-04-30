@@ -52,7 +52,8 @@ const config: ConfigurationFactory = () => {
       new CopyWebpackPlugin([
         { from: 'node_modules/webextension-polyfill/dist/browser-polyfill.js', to: '.' },
         { from: '**/*.html', to: '[path]/[name].[ext]', context: 'src' },
-        { from: 'src/manifest.json' }
+        { from: 'src/manifest.json' },
+        { from: 'devtools/icons/*.svg', context: 'src' }
       ]),
       new VueLoaderPlugin()
     ],

@@ -1,7 +1,7 @@
 {
   "description": "HttpResponseTweaker",
   "scripts": {
-    "gen-src": "license-checker --json --out src/gen/licenses.json",
+    "gen-src": "license-checker --json --out src/resources/licenses-gen.json",
     "build": "npm run gen-src && TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack --mode development --watch",
     "clean-build": "rm -rI ./dist && npm run gen-src && TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack --mode development --watch",
     "build-production": "TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack --mode production",
