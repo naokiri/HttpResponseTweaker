@@ -1,6 +1,6 @@
 import { ConfigurationFactory, Entry } from 'webpack'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
-import VueLoader from 'vue-loader'
+import VueLoaderPlugin from 'vue-loader/lib/plugin'
 import glob from 'glob'
 import path from 'path'
 
@@ -54,7 +54,7 @@ const config: ConfigurationFactory = () => {
         { from: '**/*.html', to: '[path]/[name].[ext]', context: 'src' },
         { from: 'src/manifest.json' }
       ]),
-      new VueLoader.VueLoaderPlugin()
+      new VueLoaderPlugin()
     ],
     module: {
       rules: [{
@@ -69,14 +69,17 @@ const config: ConfigurationFactory = () => {
       {
         test: /\.css$/,
         use: [
+          'vue-style-loader',
           'css-loader'
         ]
       }]
     },
     resolve: {
-      extensions: ['.vue', '.ts', 'js'],
+      extensions: ['.vue', '.ts', 'js', '*'],
       alias: {
-        vue$: 'vue/dist/vue.esm.js'
+        vue$: 'vue/dist/vue.esm.js',
+        // Somehow vue-style-loader doesn't recongnize resolve.extensions
+        './listToStyles': 'vue-style-loader/lib/listToStyles.js'
       }
     }
   }
