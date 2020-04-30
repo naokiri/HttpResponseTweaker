@@ -78,7 +78,7 @@ const config: ConfigurationFactory = () => {
     resolve: {
       extensions: ['.vue', '.ts', 'js', '*'],
       alias: {
-        vue$: 'vue/dist/vue.esm.js',
+        vue$: 'vue/dist/vue.runtime.esm.js',
         // Somehow vue-style-loader doesn't recongnize resolve.extensions
         './listToStyles': 'vue-style-loader/lib/listToStyles.js'
       }

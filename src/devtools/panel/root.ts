@@ -59,12 +59,18 @@ const addNewConfiguration = (configuration: IHttpResponseTweakConfig): void => {
 const vm = new Vue({
   el: '#vue_root',
   data: initialConfiguraiton,
-  template: `<main-frame :filterConf="filterConf"
-    @saveConfigurations="saveConfigurations"
-    @setFilterEnabled="setFilterEnabled"
-    @deleteConfiguration="deleteConfiguration"
-    @addNewConfiguration="addNewConfiguration">
-    </main-frame>`,
+  render(h) {
+    return h('main-frame',
+      {
+        props: { filterConf: this.filterConf },
+        on: {
+          saveConfigurations,
+          setFilterEnabled,
+          deleteConfiguration,
+          addNewConfiguration
+        }
+      })
+  },
   methods: {
     saveConfigurations,
     setFilterEnabled,
