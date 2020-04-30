@@ -110,12 +110,6 @@ const refreshConfigurations = (): void => {
   })
 }
 
-// browser.storage.sync.set({
-//   http_response_tweek_v1: {
-//     filterConf: Array.from(defaultData)
-//   }
-// })
-
 refreshConfigurations()
 
 export default vm

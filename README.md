@@ -6,6 +6,11 @@ If you are not a web developer and been recommended this add-on from others, it 
 
 We strongly recommend to use it only if you can read what it is doing from the source code.
 
+Features
+--------
+- Modify the http response body using string.replace
+
+
 Current restrictions (TODOs)
 ----------------------------
 - Can't modify header
@@ -44,6 +49,13 @@ Setup
 Open your firefox and navigate to 'about:debugging'.
 Load temporary add-on and open the 'dist/manifest.json' generated in the former step.
 
+Production build
+----------------
+1. Build in prod mode
+    
+    `npm run build-production`
+
+This shall generate dist/HttpResponseTweaker.zip that you can load as an extension.
 
 License
 =======
