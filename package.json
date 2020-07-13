@@ -1,7 +1,7 @@
 {
   "description": "HttpResponseTweaker",
   "scripts": {
-    "clean" : "rm -rI ./dist",
+    "clean": "rm -rI ./dist",
     "gen-src": "license-checker --json --out src/resources/licenses-gen.json",
     "build": "npm run gen-src && TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack --mode development --watch",
     "clean-build": "rm -rI ./dist && npm run gen-src && TS_NODE_PROJECT=\"tsconfig.webpack-config.json\" webpack --mode development --watch",
@@ -34,7 +34,7 @@
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
     "uuid": "^7.0.3",
