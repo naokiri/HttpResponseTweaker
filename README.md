@@ -6,6 +6,8 @@ If you are not a web developer and been recommended this add-on from others, it 
 
 We strongly recommend to use it only if you can read what it is doing from the source code.
 
+Install from here: https://addons.mozilla.org/firefox/addon/http-response-tweaker/
+
 Features
 --------
 - Modify the http response body using string.replace
