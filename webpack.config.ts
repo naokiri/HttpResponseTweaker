@@ -1,5 +1,5 @@
-import { ConfigurationFactory, Entry } from 'webpack'
-import CopyWebpackPlugin from 'copy-webpack-plugin'
+import * as webpack from 'webpack'
+import CopyPlugin from 'copy-webpack-plugin'
 import VueLoaderPlugin from 'vue-loader/lib/plugin'
 import glob from 'glob'
 import path from 'path'
@@ -24,7 +24,7 @@ function getEntryPointFile(dirname: string): string | undefined {
   return undefined
 }
 
-function getEntries(): Entry {
+function getEntries(): webpack.Entry {
   const entries = {}
   glob.sync('src/**/').forEach(
     dirname => {
@@ -41,7 +41,7 @@ function getEntries(): Entry {
   return entries
 }
 
-const config: ConfigurationFactory = () => {
+const config: webpack.ConfigurationFactory = () => {
   const devToolOption = getDevToolOption(process.env.NODE_ENV)
   const entries = getEntries()
   return {
@@ -49,12 +49,14 @@ const config: ConfigurationFactory = () => {
     context: __dirname,
     entry: entries,
     plugins: [
-      new CopyWebpackPlugin([
-        { from: 'node_modules/webextension-polyfill/dist/browser-polyfill.js', to: '.' },
-        { from: '**/*.html', to: '[path]/[name].[ext]', context: 'src' },
-        { from: 'src/manifest.json' },
-        { from: 'devtools/icons/*.svg', context: 'src' }
-      ]),
+      new CopyPlugin({
+        patterns: [
+          { from: 'node_modules/webextension-polyfill/dist/browser-polyfill.js', to: '.' },
+          { from: '**/*.html', to: '[path]/[name].[ext]', context: 'src' },
+          { from: 'src/manifest.json' },
+          { from: 'devtools/icons/*.svg', context: 'src' }
+        ]
+      }),
       new VueLoaderPlugin()
     ],
     module: {
